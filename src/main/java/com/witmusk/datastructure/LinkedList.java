@@ -4,11 +4,11 @@ import java.util.NoSuchElementException;
 
 public class LinkedList<E> {
     private int size;
-    private Node first;
+    private Node<E> first;
 
     private static class Node<E> {
         E data;
-        Node next;
+        Node<E> next;
 
         public Node() {
         }
@@ -33,14 +33,14 @@ public class LinkedList<E> {
         if (first == null) {
             throw new NoSuchElementException();
         }
-        return (E) first.data;
+        return first.data;
     }
 
     public int size() {
         return this.size;
     }
 
-    public LinkedList<E> add(E e) {
+    public LinkedList<E> addFirst(E e) {
         Node node = new Node(e, first);
         this.first = node;
         size++;
@@ -77,6 +77,32 @@ public class LinkedList<E> {
         return this;
     }
 
+    public E remove(int index) {
+        if (index < 0) {
+            throw new IllegalArgumentException("index should >= 0");
+        }
+        if (index > size - 1) {
+            throw new IndexOutOfBoundsException("index:" + index + " is out of bounds. size:" + size);
+        }
+
+        Node prev = null;
+        Node n = first;
+        for (int i = 0; i < index; i++) {
+            prev = n;
+            n = n.next;
+        }
+        if (n == first) {
+            first = n.next;
+        } else {
+            prev.next = n.next;
+        }
+        size--;
+        E e = (E) n.data;
+        n.next = null;
+        n.data = null;
+        return e;
+    }
+
     public LinkedList clear() {
         Node n = first;
         while (n != null) {
@@ -92,7 +118,7 @@ public class LinkedList<E> {
 
     public static void main(String[] args) {
         LinkedList<Integer> list = new LinkedList<>();
-        list.add(1).add(2).add(3);
+        list.addFirst(1).addFirst(2).addFirst(3);
         list.remove(1);
         list.clear();
     }

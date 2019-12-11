@@ -24,6 +24,24 @@ public class DoubleLinkedList<E> {
         first = last = null;
     }
 
+    public int size() {
+        return this.size;
+    }
+
+    public E getFirst() {
+        if (first == null) {
+            throw new NoSuchElementException();
+        }
+        return first.data;
+    }
+
+    public E getLast() {
+        if (last == null) {
+            throw new NoSuchElementException();
+        }
+        return last.data;
+    }
+
     public DoubleLinkedList<E> addFirst(E e) {
         if (first == null) {
             first = new Node(e, null, null);
@@ -77,6 +95,20 @@ public class DoubleLinkedList<E> {
             next.prev = prev;
         }
         size--;
+        return this;
+    }
+
+    public DoubleLinkedList<E> clear() {
+        Node n = first;
+        while (n != null) {
+            Node next = n.next;
+            n.prev = null;
+            n.next = null;
+            n.data = null;
+            n = next;
+        }
+        first = last = null;
+        size = 0;
         return this;
     }
 
