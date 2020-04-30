@@ -35,6 +35,21 @@ public class DoubleLinkedList<E> {
         return first.data;
     }
 
+    public E removeFirst() {
+        if (first == null) {
+            throw new NoSuchElementException();
+        }
+        E e = first.data;
+        if (first == last) {
+            first = null;
+            last = null;
+        } else {
+            first = first.next;
+        }
+        size--;
+        return e;
+    }
+
     public E getLast() {
         if (last == null) {
             throw new NoSuchElementException();
